@@ -1,7 +1,7 @@
 import { TRAIN_COUNT, STATIONS } from "../common/globals.js";
 import document from "document";
 
-export function BartUI() {
+export function WmataUI() {
   this.trainList = document.getElementById("trainList");
   this.statusText = document.getElementById("status");
 
@@ -14,7 +14,7 @@ export function BartUI() {
   }
 }
 
-BartUI.prototype.updateUI = function(state, departures) {
+WmataUI.prototype.updateUI = function(state, departures) {
   if (state === "loaded") {
     this.trainList.style.display = "inline";
     this.statusText.text = "";
@@ -36,7 +36,7 @@ BartUI.prototype.updateUI = function(state, departures) {
   }
 }
 
-BartUI.prototype.updateDepartureList = function(departures) {
+WmataUI.prototype.updateDepartureList = function(departures) {
   for (let i = 0; i < TRAIN_COUNT; i++) {
     let tile = this.tiles[i];
     if (!tile) {

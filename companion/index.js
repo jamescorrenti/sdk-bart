@@ -2,17 +2,17 @@ import { me } from "companion";
 import * as messaging from "messaging";
 import { settingsStorage } from "settings";
 
-import { BartAPI } from "./bart.js"
+import { WmataAPI } from "./wmata.js"
 import { TRAIN_COUNT, FAVORITE_STATION_SETTING } from "../common/globals.js";
 
 settingsStorage.onchange = function(evt) {
-  sendBartSchedule();
+  sendWmataSchedule();
 }
 
 // Listen for the onopen event
 messaging.peerSocket.onopen = function() {
   // Ready to send or receive messages
-  sendBartSchedule();
+  sendWmataSchedule();
 }
 
 // Listen for the onmessage event
@@ -21,7 +21,7 @@ messaging.peerSocket.onmessage = function(evt) {
   console.log(JSON.stringify(evt.data));
 }
 
-function sendBartSchedule() {
+function sendWmataSchedule() {
   let station = settingsStorage.getItem(FAVORITE_STATION_SETTING);
   if (station) {
     try {
@@ -38,8 +38,8 @@ function sendBartSchedule() {
   else {
     station = station[0].value;
   }
-  let bartApi = new BartAPI();
-  bartApi.realTimeDepartures(station.code, station.direction).then(function(departures) {
+  let wmataApi = new WmataAPI();
+  wmataApi.realTimeDepartures(station.code, station.direction).then(function(departures) {
     if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
       // Limit results to the number of tiles available in firmware
       departures.splice(TRAIN_COUNT, departures.length);

@@ -1,27 +1,30 @@
-export function BartAPI(apiKey) {
+export function WmataAPI(apiKey) {
   if (apiKey !== undefined) {
     this.apiKey = apiKey;
   }
   else {
     // Default key for open public access.
-    this.apiKey = "MW9S-E7SL-26DU-VV8V";
+    this.apiKey = "50572c1bb64a496dabdc37f911dbe04e";
   }
 };
 
-BartAPI.prototype.realTimeDepartures = function(origin, direction) {
+WmataAPI.prototype.realTimeDepartures = function(origin, direction) {
   let self = this;
   return new Promise(function(resolve, reject) {
-    let url = "https://api.bart.gov/api/etd.aspx?json=y";
-    url += "&key=" + self.apiKey;
-    url += "&cmd=etd";
-    url += "&orig=" + origin;
-    if (direction !== undefined) {
-      url += "&dir=" + direction;
-    }
+    let url = "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/"
+    url += "C07" // origin
+    // url += direction?
+    // let url = "https://api.bart.gov/api/etd.aspx?json=y";
+    url += "?api_key=" + self.apiKey;
+    // url += "&cmd=etd";
+    // url += "&orig=" + origin;
+    //if (direction !== undefined) {
+    ///  url += "&dir=" + direction;
+    //}
     fetch(url).then(function(response) {
       return response.json();
     }).then(function(json) {
-      //console.log("Got JSON response from server:" + JSON.stringify(json));
+      console.log("Got JSON response from server:" + JSON.stringify(json));
 
       let data = json["root"]["station"][0];
       let departures = [];

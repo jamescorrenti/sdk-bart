@@ -1,6 +1,6 @@
 import { STATIONS } from "../common/globals.js"
 
-console.log("Opening BART Settings page");
+console.log("Opening WMATA Settings page");
 
 let autoValues = [];
 for (let key in STATIONS) {
